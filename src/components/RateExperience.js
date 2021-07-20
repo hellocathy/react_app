@@ -1,14 +1,13 @@
 import { FaTimes } from 'react-icons/fa'
 
 const RateExperience = ({onClose, setRateId, setShowQuestions}) => {
-
   var rating = null;
 
   const sendRating = (e) => {
     fetch("http://localhost:3001/v1/ratings", {
       "method": "POST",
       "headers": {
-        "Authorization": "Bearer 81ye7ye17s713871236312s61836s12732112839",
+        "Authorization": "Bearer " + process.env.REACT_APP_API_TOKEN,
         "content-type": "application/json",
         "accept": "application/json"
       },
@@ -19,13 +18,13 @@ const RateExperience = ({onClose, setRateId, setShowQuestions}) => {
     .then(response => response.json())
     .then(data => rating = data.id)
     .then(response => {
-      console.log(rating);
       setRateId(rating);
       onClose();
       setShowQuestions(true);
     })
     .catch(err => {
       onClose();
+      console.log(err);
     });
   }
 

@@ -16,6 +16,7 @@ const Question = ({question, onChange}) => {
                 type="text"
                 id={question.id}
                 placeholder={question.placeholder}
+                required={question.required}
                 onChange={onChange}
                 rows="3" />
             )
@@ -24,11 +25,14 @@ const Question = ({question, onChange}) => {
               <input
                 className="question-input"
                 type="text"
-                placeholder={question.placeholder} />
+                id={question.id}
+                placeholder={question.placeholder}
+                required={question.required}
+                onChange={onChange}  />
             )
           case 'linear_scale':
             return (
-              <LinearScale question={question} />
+              <LinearScale question={question} onChange={onChange} />
             )
           default:
         }

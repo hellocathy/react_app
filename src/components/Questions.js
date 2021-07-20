@@ -6,15 +6,14 @@ import Question from "./Question"
 const Questions = ({rateId, onSubmit, onClose}) => {
   const [questions, setQuestions] = useState([])
   const [responses, setResponses] = useState([])
+  const [disableButton, setDisableButton] = useState(true)
 
   const onFormSubmission = (e) => {
-      e.preventDefault();
-      onSubmit();
-    }
+    e.preventDefault();
+    onSubmit();
+  }
 
   const onInputChange = (e) => {
-    console.log(e.target.id)
-    console.log(e.target.value)
     var result;
 
     if (Object.keys(responses).length === 0){
@@ -23,19 +22,22 @@ const Questions = ({rateId, onSubmit, onClose}) => {
         return map;
       }, {});
 
-      result[e.target.id] = e.target.value;
+      result[e.target.id || e.target.name] = e.target.value;
       setResponses(result);
     } else {
-      responses[e.target.id] = e.target.value;
+      responses[e.target.id || e.target.name] = e.target.value;
       setResponses(responses);
     }
+
+    var values = Object.values(result || responses);
+    setDisableButton(values.every(element => element === ""));
   }
 
   const sendResponses = (e) => {
     fetch("http://localhost:3001/v1/responses", {
       "method": "POST",
       "headers": {
-        "Authorization": "Bearer 81ye7ye17s713871236312s61836s12732112839",
+        "Authorization": "Bearer " + process.env.REACT_APP_API_TOKEN,
         "content-type": "application/json",
         "accept": "application/json"
       },
@@ -57,7 +59,7 @@ const Questions = ({rateId, onSubmit, onClose}) => {
     fetch("http://localhost:3001/v1/questions", {
       "method": "GET",
       "headers": {
-        "Authorization": "Bearer 81ye7ye17s713871236312s61836s12732112839",
+        "Authorization": "Bearer " + process.env.REACT_APP_API_TOKEN,
         "content-type": "application/json",
         "accept": "application/json"
       }
@@ -104,6 +106,7 @@ const Questions = ({rateId, onSubmit, onClose}) => {
             className="btn"
             type="submit"
             value="SUBMIT"
+            disabled={disableButton}
             onClick={sendResponses} />
         </form>
       </div>

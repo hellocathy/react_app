@@ -315,27 +315,18 @@ code {
 }
 
 .btn {
-  /* display: inline-block; */
   background: #000;
   color: #fff;
+  font-weight: bold;
   border: none;
   padding: 10px 20px;
-  /* margin: 5px; */
   border-radius: 5px;
   cursor: pointer;
   text-decoration: none;
   font-size: 15px;
   font-family: inherit;
-
-  /* text-align: right; */
-  /* justify-content: center;
-  align-items: right; */
-
-  /* float: right; */
-  /* right: 20px; */
-  /* bottom: 30px; */
-  text-align: right;
   margin: 20px;
+  float: right;
 }
 
 .btn:focus {
@@ -344,6 +335,10 @@ code {
 
 .btn:active {
   transform: scale(0.98);
+}
+
+.btn:disabled {
+  background: #8b8989;
 }
 
 .thank-you-feedback {
