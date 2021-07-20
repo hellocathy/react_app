@@ -13,113 +13,68 @@ function App() {
   const [showThankYou, setShowThankYou] = useState(false)
   const [rateId, setRateId] = useState(null)
 
-  // const [showQuestions, setShowQuestions] = useState(false)
-  // const [questions, setQuestions] = useState(null)
-
-  var rating = null;
-  // var questions;
-
-  // const getQuestions = async () => {
-  //   const response = await fetch("http://localhost:3001/v1/questions", {
-  //     "method": "GET",
-  //     "headers": {
-  //       "Authorization": "Bearer 81ye7ye17s713871236312s61836s12732112839",
-  //       "content-type": "application/json",
-  //       "accept": "application/json"
-  //     }
-  //   });
-
-  //   setQuestions(response.data) 
-  // }
-
-  // const getQuestions = () => {
-  //   fetch("http://localhost:3001/v1/questions", {
-  //     "method": "GET",
-  //     "headers": {
-  //       "Authorization": "Bearer 81ye7ye17s713871236312s61836s12732112839",
-  //       "content-type": "application/json",
-  //       "accept": "application/json"
-  //     }
-  //   })
-  //   .then(response => response.json())
-  //   .then(data => questions = data.questions)
-  //   .then(response => {
-  //     console.table(questions);
-  //     // setShowQuestions(true);
-  //     // debugger;
-  //   })
-  //   .catch(err => {
-  //     console.log(err);
-  //   });
-  // }
-
-  const sendRating = (e) => {
-    fetch("http://localhost:3001/v1/ratings", {
-      "method": "POST",
-      "headers": {
-        "Authorization": "Bearer 81ye7ye17s713871236312s61836s12732112839",
-        "content-type": "application/json",
-        "accept": "application/json"
-      },
-      "body": JSON.stringify({
-        rate: e.target.textContent
-      })
-    })
-    .then(response => response.json())
-    .then(data => rating = data.id)
-    .then(response => {
-      console.log(rating);
-      setRateId(rating);
-      setShowRateExperience(false);
-      setShowQuestions(true);
-      setShowSmiley(false);
-      // getQuestions();
-    })
-    .catch(err => {
-      console.log(err);
-    });
+  const smileyOnMouseOver = () => {
+    setShowHelpImprove(!showHelpImprove);
+    setShowSmiley(!showSmiley);
   }
 
-  const handleFormSubmitted = () => {
-    setShowThankYou(true);
-  };
+  const helpImproveOnMouseOut = () => {
+    setShowHelpImprove(!showHelpImprove);
+    setShowSmiley(!showSmiley);
+  }
+
+  const helpImproveOnClick = () => {
+    setShowRateExperience(!showRateExperience);
+    setShowSmiley(!showSmiley);
+  }
+
+  const rateExperienceOnClose = () => {
+    setShowRateExperience(!showRateExperience);
+  }
+
+  const rateExperienceOnClick = () => {
+    setShowQuestions(!showQuestions);
+  }
+
+  const questionsSubmitted = () => {
+    setShowQuestions(!showQuestions);
+    setShowThankYou(!showThankYou);
+  }
+
+  const questionsOnClose = () => {
+    setShowQuestions(!showQuestions);
+  }
 
   return (
     <div className="container">
       {
-        // !showHelpImprove && !showRateExperience && !showQuestions && <Smiley
-        showSmiley && <Smiley
-          onMouseOver={() => setShowHelpImprove(true)}
-          // onMouseOut={() => setShowHelpImprove(true)}
-        />
+        showSmiley && <Smiley onMouseOver={smileyOnMouseOver} />
       }
       
       {
         showHelpImprove && <HelpImprove
-          // onMouseOver={() => setShowHelpImprove(true)}
-          onMouseOut={() => setShowHelpImprove(false)}
-          onClick={() => setShowRateExperience(true)}
+          onMouseOut={helpImproveOnMouseOut}
+          onClick={helpImproveOnClick}
         />
       }
       
       {
         showRateExperience && <RateExperience
-          onClose={() => setShowRateExperience(false)}
-          onClick={sendRating}
+          onClose={rateExperienceOnClose}
+          setRateId={setRateId}
+          setShowQuestions={rateExperienceOnClick}
         />
       }
-
+      
       {
-        showQuestions && rateId != null && <Questions
+        showQuestions && <Questions
           rateId={rateId}
-          onFormSubmitted={handleFormSubmitted}
-          onClose={() => setShowQuestions(false)}
+          onSubmit={questionsSubmitted}
+          onClose={questionsOnClose}
         />
       }
 
-      {/* { showThankYou && <div>Show TY</div> }
-      { !showThankYou && <div>NO Show TY</div> } */}
-      {/* { !showHelpImprove && !showRateExperience && !showQuestions && <ThankYou /> } */}
+      { showThankYou && <ThankYou /> }
     </div>
   );
 }

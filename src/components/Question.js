@@ -3,7 +3,9 @@ import LinearScale from "./LinearScale"
 const Question = ({question, onChange}) => {
   return (
     <div>
-      <div className="question-text"><h4>{question.text}</h4></div>
+      <div className="question-text">
+        <h4>{question.text}</h4>
+      </div>
 
       {(() => {
         switch (question.question_type) {
@@ -19,11 +21,14 @@ const Question = ({question, onChange}) => {
             )
           case 'email':
             return (
-              <input className="question-input" type="text" placeholder={question.placeholder} />
+              <input
+                className="question-input"
+                type="text"
+                placeholder={question.placeholder} />
             )
           case 'linear_scale':
             return (
-              <LinearScale question={question}/>
+              <LinearScale question={question} />
             )
           default:
         }

@@ -1,7 +1,12 @@
 const ThankYou = () => {
   return (
-    <div>
-      T H A N K  Y O U ! ! !
+    <div className="thank-you-feedback">
+      <h2 className="thank-you-title">
+        Thank you!
+      </h2>
+      <div className="thank-you-feedback-important">
+        Your feedback is valuable to us.
+      </div>
     </div>
   )
 }

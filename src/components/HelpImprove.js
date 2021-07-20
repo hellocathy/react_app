@@ -4,7 +4,6 @@ const HelpImprove = ({onMouseOver, onMouseOut, onClick}) => {
   return (
     <MovingComponent
       className="help-improve"
-      // onMouseEnter={onMouseOver}
       onMouseLeave={onMouseOut}
       onClick={onClick}
       type="fadeInFromLeft"
@@ -18,15 +17,6 @@ const HelpImprove = ({onMouseOver, onMouseOut, onClick}) => {
           Help us improve
         </div>
     </MovingComponent>
-
-    // <div
-    //   className="help-improve"
-    //   onMouseOver={onMouseOver}
-    //   onMouseOut={onMouseOut}
-    //   onClick={onClick}
-    // >
-    //   Help us improve
-    // </div>
   )
 }
 

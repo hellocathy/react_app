@@ -6,9 +6,7 @@ const Smiley = ({onMouseOver}) => {
       src={smiley}
       alt="Smiley"
       className="smiley"
-      onMouseOver={onMouseOver}
-      // onMouseOut={onMouseOut}
-    />
+      onMouseOver={onMouseOver} />
   )
 }
 export default Smiley
