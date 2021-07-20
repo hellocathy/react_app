@@ -2,18 +2,22 @@ import { useState } from 'react'
 import Smiley from './components/Smiley'
 import HelpImprove from './components/HelpImprove'
 import RateExperience from './components/RateExperience'
+import Questions from './components/Questions'
 import ThankYou from './components/ThankYou'
-import TellUsMore from './components/TellUsMore'
 
 function App() {
+  const [showSmiley, setShowSmiley] = useState(true)
   const [showHelpImprove, setShowHelpImprove] = useState(false)
   const [showRateExperience, setShowRateExperience] = useState(false)
+  const [showQuestions, setShowQuestions] = useState(false)
   const [showThankYou, setShowThankYou] = useState(false)
-  const [showTellUsMore, setShowTellUsMore] = useState(false)
+  const [rateId, setRateId] = useState(null)
+
+  // const [showQuestions, setShowQuestions] = useState(false)
   // const [questions, setQuestions] = useState(null)
 
-  var rating;
-  var questions;
+  var rating = null;
+  // var questions;
 
   // const getQuestions = async () => {
   //   const response = await fetch("http://localhost:3001/v1/questions", {
@@ -28,25 +32,26 @@ function App() {
   //   setQuestions(response.data) 
   // }
 
-  const getQuestions = () => {
-    fetch("http://localhost:3001/v1/questions", {
-      "method": "GET",
-      "headers": {
-        "Authorization": "Bearer 81ye7ye17s713871236312s61836s12732112839",
-        "content-type": "application/json",
-        "accept": "application/json"
-      }
-    })
-    .then(response => response.json())
-    .then(data => questions = data)
-    .then(response => {
-      console.table(questions);
-      setShowTellUsMore(true);
-    })
-    .catch(err => {
-      console.log(err);
-    });
-  }
+  // const getQuestions = () => {
+  //   fetch("http://localhost:3001/v1/questions", {
+  //     "method": "GET",
+  //     "headers": {
+  //       "Authorization": "Bearer 81ye7ye17s713871236312s61836s12732112839",
+  //       "content-type": "application/json",
+  //       "accept": "application/json"
+  //     }
+  //   })
+  //   .then(response => response.json())
+  //   .then(data => questions = data.questions)
+  //   .then(response => {
+  //     console.table(questions);
+  //     // setShowQuestions(true);
+  //     // debugger;
+  //   })
+  //   .catch(err => {
+  //     console.log(err);
+  //   });
+  // }
 
   const sendRating = (e) => {
     fetch("http://localhost:3001/v1/ratings", {
@@ -61,30 +66,37 @@ function App() {
       })
     })
     .then(response => response.json())
-    .then(data => rating = data)
+    .then(data => rating = data.id)
     .then(response => {
-      console.table(rating)
+      console.log(rating);
+      setRateId(rating);
       setShowRateExperience(false);
-      setShowThankYou(true);
-      getQuestions();
+      setShowQuestions(true);
+      setShowSmiley(false);
+      // getQuestions();
     })
     .catch(err => {
       console.log(err);
     });
   }
 
+  const handleFormSubmitted = () => {
+    setShowThankYou(true);
+  };
+
   return (
     <div className="container">
       {
-        !showHelpImprove && <Smiley
+        // !showHelpImprove && !showRateExperience && !showQuestions && <Smiley
+        showSmiley && <Smiley
           onMouseOver={() => setShowHelpImprove(true)}
-          onMouseOut={() => setShowHelpImprove(false)}
+          // onMouseOut={() => setShowHelpImprove(true)}
         />
       }
       
       {
         showHelpImprove && <HelpImprove
-          onMouseOver={() => setShowHelpImprove(true)}
+          // onMouseOver={() => setShowHelpImprove(true)}
           onMouseOut={() => setShowHelpImprove(false)}
           onClick={() => setShowRateExperience(true)}
         />
@@ -98,12 +110,16 @@ function App() {
       }
 
       {
-        showThankYou && <ThankYou />
+        showQuestions && rateId != null && <Questions
+          rateId={rateId}
+          onFormSubmitted={handleFormSubmitted}
+          onClose={() => setShowQuestions(false)}
+        />
       }
 
-      {
-        showThankYou && showTellUsMore && <TellUsMore questions={questions} />
-      }
+      {/* { showThankYou && <div>Show TY</div> }
+      { !showThankYou && <div>NO Show TY</div> } */}
+      {/* { !showHelpImprove && !showRateExperience && !showQuestions && <ThankYou /> } */}
     </div>
   );
 }

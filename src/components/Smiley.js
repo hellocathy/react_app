@@ -1,13 +1,13 @@
 import smiley from '../smiley.png'
 
-const Smiley = ({onMouseOver, onMouseOut}) => {
+const Smiley = ({onMouseOver}) => {
   return (
     <img
       src={smiley}
       alt="Smiley"
       className="smiley"
       onMouseOver={onMouseOver}
-      onMouseOut={onMouseOut}
+      // onMouseOut={onMouseOut}
     />
   )
 }
