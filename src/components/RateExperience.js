@@ -4,7 +4,7 @@ const RateExperience = ({onClose, setRateId, setShowQuestions}) => {
   var rating = null;
 
   const sendRating = (e) => {
-    fetch("http://localhost:3001/v1/ratings", {
+    fetch(process.env.REACT_APP_CREATE_RATING_API, {
       "method": "POST",
       "headers": {
         "Authorization": "Bearer " + process.env.REACT_APP_API_TOKEN,

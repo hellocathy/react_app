@@ -34,7 +34,7 @@ const Questions = ({rateId, onSubmit, onClose}) => {
   }
 
   const sendResponses = (e) => {
-    fetch("http://localhost:3001/v1/responses", {
+    fetch(process.env.REACT_APP_CREATE_RESPONSE_API, {
       "method": "POST",
       "headers": {
         "Authorization": "Bearer " + process.env.REACT_APP_API_TOKEN,
@@ -56,7 +56,7 @@ const Questions = ({rateId, onSubmit, onClose}) => {
   }
 
   useEffect(() => {
-    fetch("http://localhost:3001/v1/questions", {
+    fetch(process.env.REACT_APP_GET_QUESTIONS_API, {
       "method": "GET",
       "headers": {
         "Authorization": "Bearer " + process.env.REACT_APP_API_TOKEN,
